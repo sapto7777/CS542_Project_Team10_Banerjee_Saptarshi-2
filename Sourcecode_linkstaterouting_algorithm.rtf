@@ -1,0 +1,360 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf600
+{\fonttbl\f0\fnil\fcharset0 Menlo-Bold;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 Menlo-Italic;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue109;\red109\green109\blue109;\red15\green112\blue3;
+\red0\green0\blue254;}
+{\*\expandedcolortbl;\csgray\c100000;\csgenericrgb\c0\c0\c42745;\csgenericrgb\c42745\c42745\c42745;\csgenericrgb\c5882\c43922\c1176;
+\csgenericrgb\c0\c0\c99608;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf2 \
+\
+\
+\
+\
+\
+import 
+\f1\b0 \cf0 csv\uc0\u8232 
+\f0\b \cf2 import 
+\f1\b0 \cf0 sys\uc0\u8232 
+\f0\b \cf2 import 
+\f1\b0 \cf0 os\uc0\u8232 \u8232 
+\f0\b \cf2 global 
+\f1\b0 \cf0 G    
+\f2\i \cf3 ##global variable initialized\uc0\u8232 
+\f1\i0 \cf0 G=\{\}\uc0\u8232 dic=\{\}      
+\f2\i \cf3 ##dic initialised used in best router function\uc0\u8232 
+\f1\i0 \cf0 router=[]   
+\f2\i \cf3 ##router list type initialised usd in best router function\uc0\u8232 \u8232 \u8232 \u8232 
+\f0\i0\b \cf2 def 
+\f1\b0 \cf0 Creatematrix(fname):   
+\f2\i \cf3 ## function to take text file as input and print it in a matrix format\uc0\u8232     
+\f0\i0\b \cf2 global 
+\f1\b0 \cf0 matrix_list\uc0\u8232     
+\f0\b \cf2 global 
+\f1\b0 \cf0 matrix_set\uc0\u8232     
+\f0\b \cf2 global 
+\f1\b0 \cf0 Graph\uc0\u8232     
+\f0\b \cf2 global 
+\f1\b0 \cf0 path\uc0\u8232     path=
+\f0\b \cf4 ''\uc0\u8232     
+\f1\b0 \cf0 matrix_set = \cf5 0\uc0\u8232     \cf0 matrix_list= []\uc0\u8232     
+\f0\b \cf2 if 
+\f1\b0 \cf0 fname.endswith(
+\f0\b \cf4 '.txt'
+\f1\b0 \cf0 ):\uc0\u8232 \u8232 \u8232 \u8232         
+\f0\b \cf2 with 
+\f1\b0 open\cf0 (fname) 
+\f0\b \cf2 as 
+\f1\b0 \cf0 fhand:\uc0\u8232 \u8232             matrix_list = [\cf2 list\cf0 (\cf2 map\cf0 (\cf2 int\cf0 ,line.split(
+\f0\b \cf4 " "
+\f1\b0 \cf0 ))) 
+\f0\b \cf2 for 
+\f1\b0 \cf0 line 
+\f0\b \cf2 in 
+\f1\b0 \cf0 fhand]\uc0\u8232         matrix_set = \cf5 1\uc0\u8232     
+\f0\b \cf2 else
+\f1\b0 \cf0 :\uc0\u8232         
+\f0\b \cf2 print \cf4 "Wrong file extension,Start again,it should be .txt format"  
+\f2\i\b0 \cf3 ##validations\uc0\u8232         
+\f1\i0 \cf2 quit\cf0 ()\uc0\u8232         
+\f0\b \cf2 if 
+\f1\b0 \cf0 (\cf2 len\cf0 (matrix_list)<\cf5 5\cf0 ):\uc0\u8232             
+\f0\b \cf2 print \cf4 "File should have atleast 10 nodes:"  
+\f2\i\b0 \cf3 ##matrix should have more than 5 nodes\uc0\u8232             
+\f1\i0 \cf2 quit\cf0 ()\uc0\u8232 \u8232 \u8232     
+\f0\b \cf2 print \cf4 "The topology matrix will be :"   
+\f2\i\b0 \cf3 ##printing matrix\uc0\u8232     
+\f0\i0\b \cf2 for 
+\f1\b0 \cf0 k 
+\f0\b \cf2 in 
+\f1\b0 \cf0 matrix_list:\uc0\u8232         
+\f0\b \cf2 for 
+\f1\b0 \cf0 item 
+\f0\b \cf2 in 
+\f1\b0 \cf0 k:\uc0\u8232             
+\f0\b \cf2 print 
+\f1\b0 \cf0 item,\uc0\u8232         
+\f0\b \cf2 print\uc0\u8232     print\u8232 \u8232     
+\f1\b0 \cf0 Graph = \{\}            
+\f2\i \cf3 ## Generating graph from matrix\uc0\u8232     
+\f0\i0\b \cf2 for 
+\f1\b0 \cf0 i 
+\f0\b \cf2 in 
+\f1\b0 range\cf0 (\cf2 len\cf0 (matrix_list)):\uc0\u8232         temp = \{\}\u8232         
+\f0\b \cf2 for 
+\f1\b0 \cf0 j 
+\f0\b \cf2 in 
+\f1\b0 range\cf0 (\cf2 len\cf0 (matrix_list[i])):\uc0\u8232             
+\f0\b \cf2 if 
+\f1\b0 \cf0 matrix_list[i][j] != \cf5 0 
+\f0\b \cf2 and 
+\f1\b0 \cf0 matrix_list[i][j] != -\cf5 1\cf0 :\uc0\u8232                 temp[j] = matrix_list[i][j]\u8232         Graph[i] = temp\u8232 \u8232     
+\f0\b \cf2 return 
+\f1\b0 \cf0 Graph\uc0\u8232 \u8232 
+\f0\b \cf2 def 
+\f1\b0 \cf0 ModifyMatrix(fname,r):   
+\f2\i \cf3 ## function to modify topology ,i.e.delete router\uc0\u8232     
+\f0\i0\b \cf2 global 
+\f1\b0 \cf0 matrix_list\uc0\u8232     
+\f0\b \cf2 global 
+\f1\b0 \cf0 matrix_set\uc0\u8232     
+\f0\b \cf2 global 
+\f1\b0 \cf0 Graph\uc0\u8232     
+\f0\b \cf2 global 
+\f1\b0 \cf0 path\uc0\u8232     path=
+\f0\b \cf4 ''\uc0\u8232     
+\f1\b0 \cf0 matrix_set = \cf5 0\uc0\u8232     \cf0 matrix_list= []\uc0\u8232     
+\f0\b \cf2 if 
+\f1\b0 \cf0 fname.endswith(
+\f0\b \cf4 '.txt'
+\f1\b0 \cf0 ):\uc0\u8232 \u8232 \u8232 \u8232         
+\f0\b \cf2 with 
+\f1\b0 open\cf0 (fname) 
+\f0\b \cf2 as 
+\f1\b0 \cf0 fhand:\uc0\u8232 \u8232             matrix_list = [\cf2 list\cf0 (\cf2 map\cf0 (\cf2 int\cf0 ,line.split(
+\f0\b \cf4 " "
+\f1\b0 \cf0 ))) 
+\f0\b \cf2 for 
+\f1\b0 \cf0 line 
+\f0\b \cf2 in 
+\f1\b0 \cf0 fhand]\uc0\u8232         matrix_set = \cf5 1\uc0\u8232     
+\f0\b \cf2 else
+\f1\b0 \cf0 :\uc0\u8232         
+\f0\b \cf2 print \cf4 "Wrong file extension,Start again,it should be .txt format"\uc0\u8232         
+\f1\b0 \cf2 quit\cf0 ()\uc0\u8232         
+\f0\b \cf2 if 
+\f1\b0 \cf0 (\cf2 len\cf0 (matrix_list)<\cf5 8\cf0 ):\uc0\u8232             
+\f0\b \cf2 print \cf4 "File should have atleast 10 nodes:"\uc0\u8232             
+\f1\b0 \cf2 quit\cf0 ()\uc0\u8232 \u8232 \u8232     matrix_list.pop(r)                 
+\f2\i \cf3 ##poping values from matrix\uc0\u8232     
+\f0\i0\b \cf2 for 
+\f1\b0 \cf0 i 
+\f0\b \cf2 in 
+\f1\b0 range\cf0 (\cf2 len\cf0 (matrix_list)):\uc0\u8232             matrix_list[i].pop(r)\u8232 \u8232     Graph = \{\}                             
+\f2\i \cf3 ##updating the new graph\uc0\u8232     
+\f0\i0\b \cf2 for 
+\f1\b0 \cf0 i 
+\f0\b \cf2 in 
+\f1\b0 range\cf0 (\cf2 len\cf0 (matrix_list)):\uc0\u8232         temp = \{\}\u8232         
+\f0\b \cf2 for 
+\f1\b0 \cf0 j 
+\f0\b \cf2 in 
+\f1\b0 range\cf0 (\cf2 len\cf0 (matrix_list[i])):\uc0\u8232             
+\f0\b \cf2 if 
+\f1\b0 \cf0 matrix_list[i][j] != \cf5 0 
+\f0\b \cf2 and 
+\f1\b0 \cf0 matrix_list[i][j] != -\cf5 1\cf0 :\uc0\u8232                 temp[j] = matrix_list[i][j]\u8232         Graph[i] = temp\u8232 \u8232     
+\f0\b \cf2 return 
+\f1\b0 \cf0 Graph\uc0\u8232 \u8232 \u8232 
+\f0\b \cf2 def 
+\f1\b0 \cf0 dijkstra(Graph, Start):    
+\f2\i \cf3 ##function to perform dijkstra algorithm\uc0\u8232     
+\f0\i0\b \cf2 global 
+\f1\b0 \cf0 distances\uc0\u8232     distances = \{\}\u8232     
+\f0\b \cf2 global 
+\f1\b0 \cf0 vertices\uc0\u8232     vertices=\{\}\u8232     
+\f0\b \cf2 global 
+\f1\b0 \cf0 path\uc0\u8232     path = 
+\f0\b \cf4 ''\uc0\u8232 \u8232     \cf2 global 
+\f1\b0 \cf0 previous\uc0\u8232     previous = \{\}\u8232 \u8232     
+\f0\b \cf2 for 
+\f1\b0 \cf0 v 
+\f0\b \cf2 in 
+\f1\b0 \cf0 Graph:\uc0\u8232         distances[v] = \cf5 9888888777777777777777  
+\f2\i \cf3 ##  Infinity value\uc0\u8232         
+\f1\i0 \cf0 previous[v] = \cf2 None                      
+\f2\i \cf3 # Previous node in optimal path from source\uc0\u8232     
+\f1\i0 \cf0 distances[Start] = \cf5 0                        
+\f2\i \cf3 ##start set to 0 ,so that it is chosen\uc0\u8232     
+\f0\i0\b \cf2 for 
+\f1\b0 \cf0 v 
+\f0\b \cf2 in 
+\f1\b0 \cf0 Graph:\uc0\u8232         vertices[v] = distances[v]\u8232     
+\f0\b \cf2 while 
+\f1\b0 \cf0 vertices:\uc0\u8232         
+\f0\b \cf2 for 
+\f1\b0 \cf0 key 
+\f0\b \cf2 in 
+\f1\b0 \cf0 vertices:\uc0\u8232             
+\f0\b \cf2 if 
+\f1\b0 \cf0 vertices[key] < distances[key]:\uc0\u8232                 distances[key] = vertices[key]\u8232                 previous[key] = key\u8232         
+\f0\b \cf2 del 
+\f1\b0 \cf0 vertices[key]\uc0\u8232         u = key\u8232         
+\f0\b \cf2 for 
+\f1\b0 \cf0 v 
+\f0\b \cf2 in 
+\f1\b0 \cf0 Graph[u].keys():             
+\f2\i \cf3 # for each neighbor of u\uc0\u8232 \u8232             
+\f1\i0 \cf0 w = Graph[u][v]                     
+\f2\i \cf3 # distance from u to v\uc0\u8232 \u8232             
+\f1\i0 \cf0 latest_dist = distances[u] + w\uc0\u8232             
+\f0\b \cf2 if 
+\f1\b0 \cf0 (latest_dist < distances[v]):     
+\f2\i \cf3 # is new distance shorter than one in dist, Then we need to save latest dist\uc0\u8232                 
+\f1\i0 \cf0 vertices[v] = latest_dist\uc0\u8232                 distances[v] = latest_dist\u8232                 previous[v] = u\u8232     
+\f0\b \cf2 return 
+\f1\b0 \cf0 distances,previous\uc0\u8232 \u8232 
+\f0\b \cf2 def 
+\f1\b0 \cf0 printpath(Start,previous,destination):   
+\f2\i \cf3 ##function to print previous path\uc0\u8232     
+\f0\i0\b \cf2 print \cf4 "Shortest path from Source router to Destination router:"\uc0\u8232     
+\f1\b0 \cf0 path=
+\f0\b \cf4 ''\uc0\u8232     
+\f1\b0 \cf0 x = destination\uc0\u8232 \u8232 \u8232     
+\f0\b \cf2 while 
+\f1\b0 \cf0 x != Start:\uc0\u8232         path = path + \cf2 str\cf0 (x) + 
+\f0\b \cf4 ">-"   
+\f2\i\b0 \cf3 ##from destination to start we are printing the path using previous\uc0\u8232 \u8232 \u8232         
+\f1\i0 \cf0 x = previous[x]\uc0\u8232     path = path + \cf2 str\cf0 (Start)\uc0\u8232     
+\f0\b \cf2 print 
+\f1\b0 \cf0 path[::-\cf5 1\cf0 ]\uc0\u8232 \u8232 \u8232 
+\f0\b \cf2 def 
+\f1\b0 \cf0 Connectiontable(Start):                    
+\f2\i \cf3 ## print connectiontable\uc0\u8232     
+\f0\i0\b \cf2 print \cf4 "Connection Table for Source Router:"\uc0\u8232     
+\f1\b0 \cf0 j=Start\uc0\u8232 \u8232 \u8232     
+\f0\b \cf2 for 
+\f1\b0 \cf0 i 
+\f0\b \cf2 in 
+\f1\b0 \cf0 Graph.keys():\uc0\u8232         x=i\u8232         
+\f0\b \cf2 while 
+\f1\b0 \cf0 x!=j:\uc0\u8232             
+\f0\b \cf2 if 
+\f1\b0 \cf0 previous[x]==Start:\uc0\u8232                 
+\f0\b \cf2 break\uc0\u8232             
+\f1\b0 \cf0 x=previous[x]\uc0\u8232         
+\f0\b \cf2 if 
+\f1\b0 \cf0 i==j:\uc0\u8232             x=
+\f0\b \cf4 '-'\uc0\u8232         \cf2 print 
+\f1\b0 \cf0 i,x\uc0\u8232 \u8232 
+\f0\b \cf2 def 
+\f1\b0 \cf0 bestrouter(Graph):  
+\f2\i \cf3 ##function to print best router\uc0\u8232         
+\f0\i0\b \cf2 for 
+\f1\b0 \cf0 v 
+\f0\b \cf2 in 
+\f1\b0 \cf0 Graph:\uc0\u8232 \u8232 \u8232             sum = \cf5 0\uc0\u8232             \cf0 count = \cf5 0\uc0\u8232 \u8232             \cf0 dist_b, previous = dijkstra(Graph, v)\uc0\u8232 \u8232             
+\f0\b \cf2 for 
+\f1\b0 \cf0 i 
+\f0\b \cf2 in 
+\f1\b0 \cf0 dist_b:               
+\f2\i \cf3 ## it calculates the sum of all the routers as start router\uc0\u8232                 
+\f1\i0 \cf0 sum = sum + dist_b[i]\uc0\u8232                 count = count + \cf5 1\uc0\u8232 \u8232             \cf0 dic[sum] = v 
+\f2\i \cf3 ##stored in dictionary\uc0\u8232 \u8232             
+\f1\i0 \cf0 router.append(sum)   
+\f2\i \cf3 ##stored in list\uc0\u8232             
+\f1\i0 \cf0 router.sort()        
+\f2\i \cf3 ##list sorted to find the minimum value\uc0\u8232         
+\f0\i0\b \cf2 print \cf4 "The mapping of every router with their total sum of distances:"\uc0\u8232         \cf2 print 
+\f1\b0 \cf0 dic\uc0\u8232 \u8232 \u8232         
+\f0\b \cf2 print \cf4 "The Best Router Will be :"
+\f1\b0 \cf0 , dic[router[\cf5 0\cf0 ]]\uc0\u8232 \u8232 
+\f2\i \cf3 ###.................Actual Program............Starts.................................\uc0\u8232 
+\f0\i0\b \cf2 print \cf4 "........................................................................"\uc0\u8232 \cf2 print \cf4 "Welcome to Link State Routing Simulator"\uc0\u8232 \cf2 print \cf4 "1->Input the text file and print it in matrix format"\uc0\u8232 \cf2 print \cf4 "2->To print the connection table of your source router"\uc0\u8232 \cf2 print \cf4 "3->To print the total cost,shortest path between your source and destination router "\uc0\u8232 \cf2 print \cf4 "4->To delete a router"\uc0\u8232 \cf2 print \cf4 "5->To print the best router"\uc0\u8232 \cf2 print \cf4 "6->Program Exit"\uc0\u8232 \cf2 print \cf4 "Press Y to return to Main Menu"\uc0\u8232 \cf2 print \cf4 "............................................................................"\uc0\u8232 
+\f1\b0 \cf0 c=\cf5 1\uc0\u8232 
+\f0\b \cf2 while 
+\f1\b0 True\cf0 :   
+\f2\i \cf3 ##infinity loop\uc0\u8232   
+\f0\i0\b \cf2 try
+\f1\b0 \cf0 :\uc0\u8232    n = (\cf2 int\cf0 (\cf2 raw_input\cf0 (
+\f0\b \cf4 "Master Command:"
+\f1\b0 \cf0 )))\uc0\u8232   
+\f0\b \cf2 except 
+\f1\b0 \cf0 :\uc0\u8232       
+\f0\b \cf2 print \cf4 "Enter Number Only...Exiting......try again..."\uc0\u8232       
+\f1\b0 \cf2 quit\cf0 ()\uc0\u8232 \u8232   
+\f0\b \cf2 if 
+\f1\b0 \cf0 n!=\cf5 1 
+\f0\b \cf2 and 
+\f1\b0 \cf0 c==\cf5 1\cf0 :                   
+\f2\i \cf3 ##to validate that no other options can be executed before option 1\uc0\u8232     
+\f0\i0\b \cf2 print \cf4 "Please insert the matrix first"\uc0\u8232     \cf2 continue\uc0\u8232   else
+\f1\b0 \cf0 :\uc0\u8232     c=\cf5 0\uc0\u8232 \u8232   
+\f0\b \cf2 if 
+\f1\b0 \cf0 n==\cf5 1\cf0 :\uc0\u8232     fname=\cf2 raw_input\cf0 (
+\f0\b \cf4 "Input Original Network Topology Matrix File :"
+\f1\b0 \cf0 ) 
+\f2\i \cf3 ####main funtion for option 1 ,matrix printed\uc0\u8232 \u8232     
+\f1\i0 \cf0 G=Creatematrix(fname)\uc0\u8232 \u8232   
+\f0\b \cf2 elif 
+\f1\b0 \cf0 n==\cf5 2\cf0 :\uc0\u8232       
+\f0\b \cf2 try
+\f1\b0 \cf0 :\uc0\u8232 \u8232 \u8232        Start = \cf2 int\cf0 (\cf2 raw_input\cf0 (
+\f0\b \cf4 "Enter Start Router:"
+\f1\b0 \cf0 ))  
+\f2\i \cf3 ##only integer value accepted\uc0\u8232       
+\f0\i0\b \cf2 except
+\f1\b0 \cf0 :\uc0\u8232           
+\f0\b \cf2 print \cf4 "Enter integers only"\uc0\u8232           
+\f1\b0 \cf2 quit\cf0 ()\uc0\u8232 \u8232       dist_A, previous = dijkstra(G, Start)  
+\f2\i \cf3 ##dijkstra called\uc0\u8232 \u8232       
+\f1\i0 \cf0 Connectiontable(Start)  
+\f2\i \cf3 ## connectiontable called to print the coonection table\uc0\u8232 \u8232   
+\f0\i0\b \cf2 elif 
+\f1\b0 \cf0 n==\cf5 3\cf0 :\uc0\u8232                              
+\f2\i \cf3 ## to show cost and the best path\uc0\u8232 \u8232 \u8232     
+\f0\i0\b \cf2 try
+\f1\b0 \cf0 :\uc0\u8232 \u8232      Start1 = \cf2 int\cf0 (\cf2 raw_input\cf0 (
+\f0\b \cf4 "Enter Start Router:"
+\f1\b0 \cf0 ))\uc0\u8232 \u8232 \u8232      destination = \cf2 int\cf0 (\cf2 raw_input\cf0 (
+\f0\b \cf4 "Enter Destination Router:"
+\f1\b0 \cf0 ))\uc0\u8232     
+\f0\b \cf2 except
+\f1\b0 \cf0 :\uc0\u8232         
+\f0\b \cf2 print \cf4 "integers only"\uc0\u8232         
+\f1\b0 \cf2 quit\cf0 ()\uc0\u8232     dist_A, previous = dijkstra(G, Start1)\u8232     
+\f0\b \cf2 print \cf4 "Total Cost from Source router to Destination router:" 
+\f2\i\b0 \cf3 ##code to find the cost\uc0\u8232     
+\f0\i0\b \cf2 for 
+\f1\b0 \cf0 v 
+\f0\b \cf2 in 
+\f1\b0 \cf0 dist_A:\uc0\u8232         
+\f0\b \cf2 if 
+\f1\b0 \cf0 v == destination:\uc0\u8232             
+\f0\b \cf2 print 
+\f1\b0 \cf0 Start1, 
+\f0\b \cf4 '->'
+\f1\b0 \cf0 , destination\uc0\u8232             
+\f0\b \cf2 print \cf4 'Cost:'
+\f1\b0 \cf0 ,dist_A[v]\uc0\u8232     printpath(Start1, previous, destination) 
+\f2\i \cf3 ##printpath\uc0\u8232   
+\f0\i0\b \cf2 elif 
+\f1\b0 \cf0 n==\cf5 4\cf0 :                                  
+\f2\i \cf3 ##function to modify topology\uc0\u8232        
+\f1\i0 \cf0 t=\cf2 int\cf0 (\cf2 raw_input\cf0 (
+\f0\b \cf4 "Enter the router to delete:"
+\f1\b0 \cf0 ))\uc0\u8232        G=ModifyMatrix(fname,t)\u8232        Graph=G                  
+\f2\i \cf3 ##G assigned to Graph global to pass it through other functions\uc0\u8232 \u8232 \u8232 \u8232        
+\f0\i0\b \cf2 try
+\f1\b0 \cf0 :\uc0\u8232            dijkstra(G, Start1)\u8232            
+\f0\b \cf2 print \cf4 "Router Deleted"\uc0\u8232            \cf2 print \cf4 "........The Update Connection Table:........."\uc0\u8232 \u8232            
+\f1\b0 \cf0 Connectiontable(Start1)    
+\f2\i \cf3 ##connectiontable funtion using parameters from 3 command\uc0\u8232 \u8232        
+\f0\i0\b \cf2 except
+\f1\b0 \cf0 :\uc0\u8232            
+\f0\b \cf2 print \cf4 "Please Input the Source router and continue this after 3:"\uc0\u8232            \cf2 pass\uc0\u8232 \u8232 \u8232 \u8232 \u8232   elif 
+\f1\b0 \cf0 n==\cf5 5\cf0 :           
+\f2\i \cf3 ##to print the best router\uc0\u8232 \u8232       
+\f1\i0 \cf0 bestrouter(G)\uc0\u8232 \u8232   
+\f0\b \cf2 elif 
+\f1\b0 \cf0 n==\cf5 6\cf0 :      
+\f2\i \cf3 ## to exit the program\uc0\u8232       
+\f0\i0\b \cf2 print \cf4 "Exit CS542-04 2016 Fall project "\uc0\u8232       
+\f1\b0 \cf2 quit\cf0 ()\uc0\u8232   
+\f0\b \cf2 elif 
+\f1\b0 \cf0 n>\cf5 6\cf0 :                     
+\f2\i \cf3 ##to check options dont exceed 6\uc0\u8232       
+\f0\i0\b \cf2 print \cf4 "Options Exceeded....."\uc0\u8232       \cf2 break\uc0\u8232   
+\f1\b0 \cf0 return_to_menu = \cf2 raw_input\cf0 (
+\f0\b \cf4 "Return to Main Menu,Y/N:"
+\f1\b0 \cf0 )\uc0\u8232   
+\f0\b \cf2 if 
+\f1\b0 \cf0 return_to_menu != 
+\f0\b \cf4 'Y'
+\f1\b0 \cf0 :\uc0\u8232 \u8232       
+\f0\b \cf2 print \cf4 "Sorry ,Wrong Choice.....The program terminates......"\uc0\u8232       \cf2 break\uc0\u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \u8232 \
+}
